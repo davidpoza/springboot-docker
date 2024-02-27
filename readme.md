@@ -3,7 +3,7 @@ erDiagram
   FEED ||--o{ ARTICLE : publishes
   CURED_ARTICLE ||--|{ ARTICLE : referes
   CURED_ARTICLE }|--|{ TAG : tagged
-
+  BULLETIN ||--|{ CURED_ARTICLE : contains
 
   FEED {
     string title
@@ -26,5 +26,11 @@ erDiagram
 
   TAG {
     string name
+  }
+
+  BULLETIN {
+    date published_at
+    date generation_started_at
+    date generation_completed_at
   }
 ```
