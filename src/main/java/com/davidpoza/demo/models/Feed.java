@@ -1,5 +1,7 @@
 package com.davidpoza.demo.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,11 +11,11 @@ import jakarta.persistence.Id;
 public class Feed {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long id;
+  private UUID id;
   private String url;
   private String title;
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 

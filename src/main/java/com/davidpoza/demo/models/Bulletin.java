@@ -1,6 +1,7 @@
 package com.davidpoza.demo.models;
 
 import java.sql.Date;
+import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,13 +12,13 @@ import jakarta.persistence.Id;
 public class Bulletin {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private Long id;
+  private UUID id;
 
   private Date publishedAt;
   private Date generationStartedAt;
   private Date generationCompletedAt;
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
