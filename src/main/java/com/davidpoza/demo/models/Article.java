@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Article {
@@ -17,6 +19,15 @@ public class Article {
   private Date publishedAt;
   private String fullContent;
   private String summaryContent;
+
+  @ManyToOne
+  @JoinColumn(name = "feed_id")
+  private Feed feed;
+
+  @ManyToOne
+  @JoinColumn(name = "cured_article_id")
+  private CuredArticle curedArticle;
+
 
   public Long getId() {
     return id;
@@ -60,6 +71,22 @@ public class Article {
 
   public void setSummaryContent(String summaryContent) {
     this.summaryContent = summaryContent;
+  }
+
+  public Feed getFeed() {
+    return feed;
+  }
+
+  public void setFeed(Feed feed) {
+    this.feed = feed;
+  }
+
+  public CuredArticle getCuredArticle() {
+    return curedArticle;
+  }
+
+  public void setCuredArticle(CuredArticle curedArticle) {
+    this.curedArticle = curedArticle;
   }
 
 
