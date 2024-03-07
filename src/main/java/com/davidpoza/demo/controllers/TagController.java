@@ -1,14 +1,43 @@
 package com.davidpoza.demo.controllers;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.apptasticsoftware.rssreader.Item;
+import com.apptasticsoftware.rssreader.RssReader;
+import com.davidpoza.demo.services.LLMResponse;
+import com.davidpoza.demo.services.OpenAIService;
+
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/tags")
 public class TagController {
 
+  @Autowired
+  OpenAIService openAI;
+
   @RequestMapping("/test")
-  public String test() {
-    return "tag";
+  public List<Item> test() {
+    RssReader rssReader = new RssReader();
+    List<Item> items;
+    try {
+      items = rssReader.read("https://www.genbeta.com/feedburner.xml").toList();
+      System.out.println(items);
+      return items;
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  @RequestMapping("/test2")
+  public Mono<LLMResponse> test2() {
+    return this.openAI.getResponse(1);
   }
 }
