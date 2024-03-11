@@ -30,17 +30,17 @@ public class OpenAIServiceImpl implements OpenAIService {
 
 
   @Override
-  public Mono<LLMResponse> getResponse(int id) {
-    return webClient.get().uri("posts/{id}", id).retrieve().bodyToMono(LLMResponse.class);
+  public Mono<LLMResponse> getResponse(LLMRequest request) {
+    return webClient.post().uri("/v1/chat/completions").body(Mono.just(request), LLMRequest.class).retrieve().bodyToMono(LLMResponse.class);
   }
 
   private ExchangeFilterFunction logRequest() {
-        return (clientRequest, next) -> {
-            LOGGER.info("Request: {} {}" + clientRequest.method() + clientRequest.url());
-            clientRequest.headers()
-                    .forEach((name, values) -> values.forEach(value -> LOGGER.info("{}={}" + name + value)));
-            return next.exchange(clientRequest);
-        };
-    }
+      return (clientRequest, next) -> {
+          LOGGER.info("Request: {} {}" + clientRequest.method() + clientRequest.url());
+          clientRequest.headers()
+                  .forEach((name, values) -> values.forEach(value -> LOGGER.info("{}={}" + name + value)));
+          return next.exchange(clientRequest);
+      };
+  }
 
 }
