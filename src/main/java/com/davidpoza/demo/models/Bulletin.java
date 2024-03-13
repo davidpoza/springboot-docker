@@ -1,6 +1,7 @@
 package com.davidpoza.demo.models;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -17,6 +18,20 @@ public class Bulletin {
   private Date publishedAt;
   private Date generationStartedAt;
   private Date generationCompletedAt;
+
+  private ArrayList<String> headlines;
+
+  public Bulletin() {
+    this.headlines = new ArrayList<String>();
+  }
+
+  public void addHeadline(String headline){
+    this.headlines.add(headline);
+  }
+
+  public ArrayList<String> getHeadlines() {
+    return this.headlines;
+  }
 
   public UUID getId() {
     return id;
