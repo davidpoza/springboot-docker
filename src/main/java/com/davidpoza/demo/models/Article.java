@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Article {
@@ -20,6 +22,10 @@ public class Article {
   private Date publishedAt;
   private String fullContent;
   private String summaryContent;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "job_id")
+  private Job job;
 
   @ManyToOne
   @JoinColumn(name = "feed_id")
@@ -88,6 +94,14 @@ public class Article {
 
   public void setCuredArticle(CuredArticle curedArticle) {
     this.curedArticle = curedArticle;
+  }
+
+  public Job getJob() {
+    return job;
+  }
+
+  public void setJob(Job job) {
+    this.job = job;
   }
 
 

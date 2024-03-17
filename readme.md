@@ -4,6 +4,8 @@ erDiagram
   CURED_ARTICLE ||--|{ ARTICLE : referes
   CURED_ARTICLE }|--|{ TAG : tagged
   BULLETIN ||--|{ CURED_ARTICLE : contains
+  JOB ||--|| ARTICLE : process
+
 
   FEED {
     string title
@@ -32,5 +34,12 @@ erDiagram
     date published_at
     date generation_started_at
     date generation_completed_at
+  }
+
+  JOB {
+    date created_at
+    date finished_at
+    date updated_at
+    string state
   }
 ```
