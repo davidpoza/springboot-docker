@@ -1,7 +1,9 @@
 package com.davidpoza.demo.models;
 
 import java.sql.Date;
-import java.util.UUID;
+
+
+import com.davidpoza.demo.enums.State;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -11,25 +13,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
-enum State {
-  NEW, LLM, TTS, AUDIO_MIX, DONE
-}
-
 @Entity
 public class Job {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private UUID id;
+  private Long id;
 
   private Date created_at;
   private Date finished_at;
   private Date updated_at;
   private State state;
 
-  @OneToOne(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Article article;
+  // @OneToOne(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  // private Article article;
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
   public Date getCreated_at() {
@@ -56,12 +54,12 @@ public class Job {
   public void setState(State state) {
     this.state = state;
   }
-  public Article getArticle() {
-    return article;
-  }
-  public void setArticle(Article article) {
-    this.article = article;
-  }
+  // public Article getArticle() {
+  //   return article;
+  // }
+  // public void setArticle(Article article) {
+  //   this.article = article;
+  // }
 
 
 }

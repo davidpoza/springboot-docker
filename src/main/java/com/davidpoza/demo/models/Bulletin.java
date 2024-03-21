@@ -2,7 +2,7 @@ package com.davidpoza.demo.models;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.UUID;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 public class Bulletin {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private UUID id;
+  private Long id;
 
   private Date publishedAt;
   private Date generationStartedAt;
@@ -33,7 +33,7 @@ public class Bulletin {
     return this.headlines;
   }
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
 

@@ -1,7 +1,7 @@
 package com.davidpoza.demo.models;
-import org.springframework.data.repository.CrudRepository;
-import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FeedRepository extends CrudRepository<Feed, UUID> {
+
+public interface FeedRepository extends JpaRepository<Feed, Long> {
 
 }

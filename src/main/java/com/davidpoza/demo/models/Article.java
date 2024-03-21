@@ -1,7 +1,7 @@
 package com.davidpoza.demo.models;
 
 import java.sql.Date;
-import java.util.UUID;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,23 +9,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Article {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private UUID id;
+  private Long id;
   private String url;
   private String title;
   private Date publishedAt;
+
+  @Lob
   private String fullContent;
+
+  @Lob
   private String summaryContent;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "job_id")
-  private Job job;
+  // @OneToOne(fetch = FetchType.LAZY)
+  // @JoinColumn(name = "job_id")
+  // private Job job;
 
   @ManyToOne
   @JoinColumn(name = "feed_id")
@@ -36,7 +40,7 @@ public class Article {
   private CuredArticle curedArticle;
 
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
 
@@ -96,13 +100,13 @@ public class Article {
     this.curedArticle = curedArticle;
   }
 
-  public Job getJob() {
-    return job;
-  }
+  // public Job getJob() {
+  //   return job;
+  // }
 
-  public void setJob(Job job) {
-    this.job = job;
-  }
+  // public void setJob(Job job) {
+  //   this.job = job;
+  // }
 
 
 

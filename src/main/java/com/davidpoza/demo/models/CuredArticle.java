@@ -2,7 +2,7 @@ package com.davidpoza.demo.models;
 
 import java.sql.Date;
 import java.util.HashSet;
-import java.util.UUID;
+
 
 import org.hibernate.mapping.Set;
 
@@ -20,7 +20,7 @@ import jakarta.persistence.ManyToOne;
 public class CuredArticle {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private UUID id;
+  private Long id;
 
   private String title;
   private String content;
@@ -38,7 +38,7 @@ public class CuredArticle {
   )
   HashSet<Tag> tags = new HashSet<>();
 
-  public UUID getId() {
+  public Long getId() {
     return id;
   }
 

@@ -2,7 +2,7 @@ package com.davidpoza.demo.models;
 
 
 import java.util.HashSet;
-import java.util.UUID;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,12 +14,12 @@ import jakarta.persistence.ManyToMany;
 public class Tag {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
-  private UUID id;
+  private long id;
 
   @ManyToMany(mappedBy = "tags")
   private HashSet<CuredArticle> curedArticles = new HashSet<>();
 
-  public UUID getId() {
+  public long getId() {
     return id;
   }
 
