@@ -16,3 +16,10 @@ alter table if exists article add constraint FKqft6wk7f6tx6mvm9h6ssa4ea1 foreign
 alter table if exists cured_article add constraint FKganv6oqhbajktghfmbcui83je foreign key (bulletin_id) references bulletin;
 alter table if exists cured_articles_tags add constraint FK61nwmp0ngr9si76jq9qnrhc99 foreign key (tag_id) references tag;
 alter table if exists cured_articles_tags add constraint FKaty8wq2sy1f3uf61hm1i0wsfb foreign key (cured_article_id) references cured_article;
+INSERT INTO feed (id, title, url) VALUES(1, 'genbeta', 'https://www.genbeta.com/feedburner.xml');
+INSERT INTO feed (id, title, url) VALUES(2, 'adslzone', 'https://feeds.feedburner.com/adslzone/adslzone');
+INSERT INTO feed (id, title, url) VALUES(3, 'slashdot', 'https://rss.slashdot.org/Slashdot/slashdotMain');
+INSERT INTO feed (id, title, url) VALUES(4, 'theverge', 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml');
+INSERT INTO feed (id, title, url) VALUES(5, 'techcrunch', 'https://techcrunch.com/category/artificial-intelligence/feed/');
+INSERT INTO feed (id, title, url) VALUES(6, 'xataka', 'https://www.xatakahome.com/feedburner.xml');
+INSERT INTO feed (id, title, url) VALUES(7, 'bandaancha', 'https://feeds.feedburner.com/bandaanchaeu');
