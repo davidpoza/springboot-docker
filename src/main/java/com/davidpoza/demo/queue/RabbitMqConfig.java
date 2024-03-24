@@ -36,11 +36,6 @@ public class RabbitMqConfig {
   }
 
   @Bean
-  public MessageConverter jsonMessageConverter(){
-      return new Jackson2JsonMessageConverter();
-  }
-
-  @Bean
   public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
       final var rabbitTemplate = new RabbitTemplate(connectionFactory);
       rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());

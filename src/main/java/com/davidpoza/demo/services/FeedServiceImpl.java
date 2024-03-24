@@ -1,6 +1,9 @@
 package com.davidpoza.demo.services;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -87,7 +90,7 @@ public class FeedServiceImpl implements FeedService {
     RssReader rssReader = new RssReader();
     List<Item> items;
     ArrayList<ArticleDTO> result = new ArrayList<ArticleDTO>();
-
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     List<Feed> feeds = feedRepository.findAll();
     List<String> urls = feeds.stream()
       .map(f -> f.getUrl())
@@ -97,7 +100,7 @@ public class FeedServiceImpl implements FeedService {
 
     for (Item item : items) {
       String title = item.getTitle().orElse("");
-      String publishedAt = item.getPubDate().orElse("");
+      ZonedDateTime publishedAt = item.getPubDateZonedDateTime().orElse(null);
       String content = item.getDescription().orElse("");
       String url = item.getLink().orElse("");
 
@@ -107,14 +110,18 @@ public class FeedServiceImpl implements FeedService {
       article.setUrl(url);
       article.setCuredArticle(null);
       articlesRepository.save(article);
-
-      result.add(new ArticleDTO(
-          url,
-          title,
-          publishedAt != null ? new Date(publishedAt) : null,
-          content));
-      final var message = new CustomMessage(article.getId().toString(), new Date(), null, State.NEW.toString());
-      rabbitTemplate.convertAndSend(RabbitMqConfig.topicExchangeName, RabbitMqConfig.routingKey, message);
+      LOGGER.info(url + " " + publishedAt);
+      try {
+        result.add(new ArticleDTO(
+            url,
+            title,
+            Date.from(publishedAt.toInstant()),
+            content));
+        final CustomMessage message = new CustomMessage(article.getId(), State.NEW.toString());
+        rabbitTemplate.convertAndSend(RabbitMqConfig.topicExchangeName, RabbitMqConfig.routingKey, message);
+      } catch (Exception e) {
+        LOGGER.warning("Cannot send to queue: " + url + " " + publishedAt);
+      }
     }
     return result;
   }

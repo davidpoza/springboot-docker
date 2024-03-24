@@ -6,9 +6,9 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record CustomMessage(
-  @JsonProperty("articleId") String articleId,
-  @JsonProperty("startedAt") Date startedAt,
-  @JsonProperty("finishedAt") Date finishedAt,
+  @JsonProperty("articleId") Long articleId,
+  // @JsonProperty("startedAt") Date startedAt,
+  // @JsonProperty("finishedAt") Date finishedAt,
   @JsonProperty("state") String state
   ) implements Serializable {
 }
