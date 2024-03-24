@@ -104,23 +104,26 @@ public class FeedServiceImpl implements FeedService {
       String content = item.getDescription().orElse("");
       String url = item.getLink().orElse("");
 
-      Article article = new Article();
-      article.setTitle(title);
-      article.setFullContent(content);
-      article.setUrl(url);
-      article.setCuredArticle(null);
-      articlesRepository.save(article);
-      log.info(url + " " + publishedAt);
-      try {
-        result.add(new ArticleDTO(
-            url,
-            title,
-            Date.from(publishedAt.toInstant()),
-            content));
-        final CustomMessage message = new CustomMessage(article.getId(), State.NEW.toString());
-        rabbitTemplate.convertAndSend(RabbitMqConfig.topicExchangeName, RabbitMqConfig.routingKey, message);
-      } catch (Exception e) {
-        log.warning("Cannot send to queue: " + url + " " + publishedAt);
+      Article existingArticle =articlesRepository.findByUrl(url);
+      if (existingArticle == null) {
+        Article article = new Article();
+        article.setTitle(title);
+        article.setFullContent(content);
+        article.setUrl(url);
+        article.setCuredArticle(null);
+        articlesRepository.save(article);
+        log.info(url + " " + publishedAt);
+        try {
+          result.add(new ArticleDTO(
+              url,
+              title,
+              Date.from(publishedAt.toInstant()),
+              content));
+          final CustomMessage message = new CustomMessage(article.getId(), State.NEW.toString());
+          rabbitTemplate.convertAndSend(RabbitMqConfig.topicExchangeName, RabbitMqConfig.routingKey, message);
+        } catch (Exception e) {
+          log.warning("Cannot send to queue: " + url + " " + publishedAt);
+        }
       }
     }
     return result;
