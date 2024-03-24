@@ -50,7 +50,7 @@ public class FeedServiceImpl implements FeedService {
   @Value("${llm-model}")
   private String model;
 
-  private static final Logger LOGGER = Logger.getLogger(OpenAIServiceImpl.class.getName());
+  private static final Logger log = Logger.getLogger(OpenAIServiceImpl.class.getName());
   private final RabbitTemplate rabbitTemplate;
 
   @Autowired
@@ -79,9 +79,9 @@ public class FeedServiceImpl implements FeedService {
 
   private ExchangeFilterFunction logRequest() {
     return (clientRequest, next) -> {
-        LOGGER.info("Request: {} {}" + clientRequest.method() + clientRequest.url());
+        log.info("Request: {} {}" + clientRequest.method() + clientRequest.url());
         clientRequest.headers()
-                .forEach((name, values) -> values.forEach(value -> LOGGER.info("{}={}" + name + value)));
+                .forEach((name, values) -> values.forEach(value -> log.info("{}={}" + name + value)));
         return next.exchange(clientRequest);
     };
   }
@@ -110,7 +110,7 @@ public class FeedServiceImpl implements FeedService {
       article.setUrl(url);
       article.setCuredArticle(null);
       articlesRepository.save(article);
-      LOGGER.info(url + " " + publishedAt);
+      log.info(url + " " + publishedAt);
       try {
         result.add(new ArticleDTO(
             url,
@@ -120,7 +120,7 @@ public class FeedServiceImpl implements FeedService {
         final CustomMessage message = new CustomMessage(article.getId(), State.NEW.toString());
         rabbitTemplate.convertAndSend(RabbitMqConfig.topicExchangeName, RabbitMqConfig.routingKey, message);
       } catch (Exception e) {
-        LOGGER.warning("Cannot send to queue: " + url + " " + publishedAt);
+        log.warning("Cannot send to queue: " + url + " " + publishedAt);
       }
     }
     return result;

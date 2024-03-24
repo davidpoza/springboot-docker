@@ -1,7 +1,6 @@
 package com.davidpoza.demo.queue;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,4 +10,14 @@ public record CustomMessage(
   // @JsonProperty("finishedAt") Date finishedAt,
   @JsonProperty("state") String state
   ) implements Serializable {
+
+  public Long articleId() {
+    return articleId;
+  }
+
+  public String state() {
+    return state;
+  }
+
+
 }
